@@ -1,0 +1,75 @@
+<div class="bg-white p-5 h-full flex-1" style="width:100vw; grid-template-rows: 1fr auto;">
+    <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="small" color="#fff" type="square-jelly-box" [fullScreen]="false">
+        <p style="color: white"> Loading... </p>
+    </ngx-spinner>
+
+    <div class="grid grid-cols-11 main-div">
+        <div class="col-span-2 text-center p-2">
+            <mat-accordion>
+                <mat-expansion-panel *ngFor="let item of task_list;let i=index;">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title class="p-2">
+                            {{item.title}}
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <section class="text-left">
+                        <span class="chk-box">
+                            <mat-checkbox class="" [checked]="allComplete[item.title]"
+                                [indeterminate]="someComplete(item,i)" (change)="setAll($event.checked,item,i)">
+
+                            </mat-checkbox>
+                            {{task.name}}
+                        </span>
+                        <span class="chk-box">
+                            <ul class="ul-check">
+                                <li class="li-check" *ngFor="let subtask of item.subTask; let j=index">
+                                    <mat-checkbox [(ngModel)]="subtask.completed"
+                                        (ngModelChange)="updateAllComplete(item,i,j)">
+                                    </mat-checkbox>
+                                    {{subtask.name}}
+                                </li>
+                            </ul>
+                        </span>
+                    </section>
+                </mat-expansion-panel>
+                <!-- <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title class="p-2">
+                            Regions
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <p>I'm visible because I am open</p>
+                </mat-expansion-panel> -->
+            </mat-accordion>
+        </div>
+        <div class="col-span-5 bg-gray-100 py-3 " style="position: relative ;height:100%; overflow: hidden;">
+            <div style="overflow-y:auto; padding-bottom:10px; height:100% !important;" #scrollContainer
+                class="scroll-container">
+                <ng-container *ngFor="let message of messages">
+                    <div class="message" [ngClass]="{ 'from': message.author === 'bot',
+                    'to': message.author === 'user' }">
+
+                        {{message.content }}
+                    </div>
+
+                </ng-container>
+            </div>
+            <div class="bg-white box-wrapper">
+                <mat-form-field class="w-full border-solid">
+                    <input class="py-5 h-full mr-3" style="height:50px" matInput placeholder="Enter a query..."
+                        [(ngModel)]="value" (keyup.enter)="sendMessage()" type="text" name="fieldName11">
+                    <mat-icon matSuffix (click)="sendMessage()" class="send-icon">send</mat-icon>
+                </mat-form-field>
+
+            </div>
+
+
+        </div>
+        <div class="col-span-4 " class="overflow-x: auto;">
+            <app-example-pdf-viewer [template] = "input_string">
+               
+            </app-example-pdf-viewer>
+        </div>
+    </div>
+</div>
+
