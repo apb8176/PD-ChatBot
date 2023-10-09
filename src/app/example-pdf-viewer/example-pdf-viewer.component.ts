@@ -27,7 +27,7 @@ export class ExamplePdfViewerComponent  implements OnInit {
   page: any = 1;
   rotation: any = 0;
   zoom: any = 1.0;
-  zoomScale: ZoomScale = 'page-width';
+  zoomScale: ZoomScale = 'page-fit';
   originalSize: any = false;
   myControl = new FormControl('');
   renderText: any = true;

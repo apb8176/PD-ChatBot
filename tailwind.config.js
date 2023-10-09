@@ -18,6 +18,7 @@ module.exports = {
           // ...
           900: '#1a202c',
         },
+        'primary': '#6FCD82',
         "base-shade-100": "var(--base-shade-100)",
         "light-black": "var(--light-black)",
       },

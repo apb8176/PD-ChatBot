@@ -28,6 +28,7 @@ export class ChatScreenComponent implements OnInit {
   messages: Message[] = [];
   value: string ='';
   input_string : any ;
+  showPDF:boolean = true;
   @ViewChild('scrollContainer') scrollContainer!: ElementRef;
   pdfSrc: string | Uint8Array | PDFSource = '../../../assets/pdfs/pdf-test.pdf';
   task: Task = {
@@ -93,7 +94,7 @@ export class ChatScreenComponent implements OnInit {
           });
   
         }
-        
+        this.showPDF = true;
         }, 2002);
       
     
@@ -110,7 +111,7 @@ export class ChatScreenComponent implements OnInit {
   error: any;
   page = 1;
   rotation = 0;
-  zoom = 1.0;
+  zoom = 0.4;
   zoomScale: ZoomScale = 'page-width';
   originalSize = false;
   pdf: any;
@@ -143,7 +144,10 @@ export class ChatScreenComponent implements OnInit {
       
     });
   }
-
+  hidePDF(){
+    
+    this.showPDF = false;
+  }
   // Load pdf
   loadPdf() {
     const xhr = new XMLHttpRequest();

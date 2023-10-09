@@ -3,9 +3,8 @@
   position: absolute;
   // height: 100%;
   // width: fit-content;
-  height: 595px;
-   
-    width: 708px;
+  height: 100%;
+  width: 100%;
   -webkit-overflow-scrolling: touch;
 }
 
@@ -30,7 +29,7 @@
  * limitations under the License.
  */
   --pdfViewer-padding-bottom: 0;
-  --page-margin: 1px auto -8px;
+  --page-margin: 0px;
   --page-border: 9px solid transparent;
   --spreadHorizontalWrapped-margin-LR: -3.5px;
   --viewer-container-height: 0;
@@ -910,7 +909,7 @@
   }
 
   .pdfViewer.removePageBorders .page {
-    margin: 0 auto 10px;
+    margin: 0px;
     border: none;
   }
 
