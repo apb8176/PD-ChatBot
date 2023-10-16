@@ -111,12 +111,12 @@ export class ChatScreenComponent implements OnInit {
       this.input_string = this.value;
       //this.showPDF = true;
       this.load = true;
-      this.loadDataService.input_pdf_text = {
-        'page': "",
-        'loc': "chat-page",
-        //text: this.value
-        'text': this.sample_string
-      }
+      // this.loadDataService.input_pdf_text = {
+      //   'page': "",
+      //   'loc': "chat-page",
+      //   //text: this.value
+      //   'text': this.sample_string
+      // }
       // setTimeout(() => {
       //   this.task_list = [];
       //   let data = this.chatService.response;

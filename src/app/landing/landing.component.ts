@@ -16,5 +16,6 @@ export class LandingComponent {
       if (window.screen.width <= 768) {
         this.mobile = true;
       }
+      this.user_Name = localStorage.getItem('userName');
     }
 }

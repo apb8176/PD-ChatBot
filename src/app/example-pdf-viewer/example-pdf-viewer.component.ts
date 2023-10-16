@@ -62,7 +62,7 @@ export class ExamplePdfViewerComponent implements OnInit {
     setTimeout(() => {
       //this.zoomScale = newValue['loc'] == 'popup'?'page-width':'page-fit'
       this.searchQueryChanged(this.loadDataService.input_pdf_text.text);
-    }, 1000)
+    }, 1500)
 
     if (window.screen.width <= 768) {
       this.mobile = true;
