@@ -45,8 +45,9 @@ export class ChatService {
           this.currentChat.bot = response.answer;
           
           if(localStorage.getItem('history')){
-            let item = localStorage.getItem('history')|| '{}';
-            history = JSON.parse(item);
+            let item:any = localStorage.getItem('history');
+            let arr = JSON.parse(item);
+            this.history.push(arr[0]);
             this.history.push(this.currentChat);
             localStorage.setItem('history',JSON.stringify(this.history));
           }
