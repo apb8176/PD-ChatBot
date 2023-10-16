@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, Pipe, PipeTransform, ViewChild } from '@angular/core';
 import { ChatService, Message } from './chat.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ApiService } from 'src/app/core/api.service';
@@ -6,7 +6,18 @@ import { ThemePalette } from '@angular/material/core';
 import { PDFSource, ZoomScale, PDFProgressData, PdfViewerComponent, PDFDocumentProxy } from 'ng2-pdf-viewer';
 import { Observable, of } from 'rxjs';
 import { LoadDataService } from 'src/app/core/load-data.service';
+import { MatDialog } from '@angular/material/dialog';
+import { PdfPreviewDialogComponent } from './pdf-preview-dialog/pdf-preview-dialog.component';
+import { DomSanitizer,SafeHtml } from '@angular/platform-browser';
 
+@Pipe({ name: 'safeHtml' })
+export class SafeHtmlPipe implements PipeTransform {
+  constructor(private sanitizer: DomSanitizer) {}
+
+  transform(value: any): any {
+    return this.sanitizer.bypassSecurityTrustHtml(value);
+  }
+}
 
 export interface Task {
   name: string;
@@ -21,110 +32,115 @@ export interface Task {
   styleUrls: ['./chat-screen.component.scss']
 })
 export class ChatScreenComponent implements OnInit {
+  load: boolean = false;
   constructor(public chatService: ChatService,
     private spinner: NgxSpinnerService,
     public apiService: ApiService,
-    private loadDataService:LoadDataService) { }
+    public dialog: MatDialog,
+    private loadDataService: LoadDataService) { }
   messages: Message[] = [];
-  value: string ='';
-  input_string : any ;
-  showPDF:boolean = true;
+  value: string = '';
+  input_string: any;
+  showPDF: boolean = false;
+  sample_string = "Interpretations are the full responsibility of those producing them. Neither the GRI Board of Directors, GSSB, nor Stichting Global Reporting Initiative (GRI) can assume responsibility for any consequences or damages resulting directly or indirectly from the use of the GRI Standards and related Interpretations in the preparation of reports, or the   use of reports based on the GRI Standards and related Interpretations."
   @ViewChild('scrollContainer') scrollContainer!: ElementRef;
-  pdfSrc: string | Uint8Array | PDFSource = '../../../assets/pdfs/pdf-test.pdf';
+  pdfSrc: string | Uint8Array | PDFSource = '../https://stbj3z634zumnje.blob.core.windows.net/content/' + this.loadDataService.input_pdf_text.page + '?sp=r&st=2023-10-13T04:39:47Z&se=2023-10-31T12:39:47Z&spr=https&sv=2022-11-02&sr=c&sig=KjS4aPl9fHgKGxhz6w5Ji2%2B9tHsECkPY3JRFLBPwBeM%3D';
   task: Task = {
     name: 'Select All',
     completed: false,
     color: 'primary',
     subtasks: [
-      {name: 'Primary', completed: false, color: 'primary'},
-      {name: 'Accent', completed: false, color: 'accent'},
-      {name: 'Warn', completed: false, color: 'warn'},
+      { name: 'Primary', completed: false, color: 'primary' },
+      { name: 'Accent', completed: false, color: 'accent' },
+      { name: 'Warn', completed: false, color: 'warn' },
     ],
   };
 
-  task_list : any=[];
+  task_list: any = [];
 
-  allComplete: any= [];
+  allComplete: any = [];
+  openDialog(): void {
+    let val = JSON.parse(JSON.stringify(this.loadDataService.input_pdf_text));
+    let temp =
+    {
+      'page': '',
+      'loc': 'popup',
+      'text': val.text
+    }
+    this.loadDataService.input_pdf_text = temp;
 
-  updateAllComplete(item:any,index:any,sub:any) {
+    const dialogRef = this.dialog.open(PdfPreviewDialogComponent, {
+      width: '91.1875rem',
+      height: '45.875rem',
+      data: {},
+      panelClass: 'custom-dialog-container'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      //this.animal = result;
+    });
+  }
+  updateAllComplete(item: any, index: any, sub: any) {
     //this.allComplete[index] = false;
-    this.allComplete[item.title] = this.task_list[index].subTask != null && this.task_list[index].subTask.every((t:any) => t.completed);
+    this.allComplete[item.title] = this.task_list[index].subTask != null && this.task_list[index].subTask.every((t: any) => t.completed);
   }
 
-  someComplete(item:any,index:any): boolean {
+  someComplete(item: any, index: any): boolean {
     if (this.task_list[index].subTask == null) {
       return false;
     }
-    return this.task_list[index].subTask.filter((t:any) => t.completed).length > 0 && !this.allComplete[item.title];
+    return this.task_list[index].subTask.filter((t: any) => t.completed).length > 0 && !this.allComplete[item.title];
   }
 
-  setAll(completed: boolean,task:any,index:any) {
-    
+  setAll(completed: boolean, task: any, index: any) {
+
     this.allComplete[index] = completed;
     if (this.task_list[index].subTask == null) {
       return;
     }
-    this.task_list[index].subTask.forEach((t:any) => (t.completed = completed));
-    
+    this.task_list[index].subTask.forEach((t: any) => (t.completed = completed));
+
   }
- 
+
 
   sendMessage() {
     this.spinner.show();
-    if(this.value!=''){
-      this.chatService.getBotAnswer(this.value); 
-      this.input_string = this.value;    
-      
+    if (this.value != '') {
+      this.chatService.getBotAnswer(this.value,this.messages);
+      this.input_string = this.value;
+      //this.showPDF = true;
+      this.load = true;
       this.loadDataService.input_pdf_text = {
-        page: "",
-        text: this.value
-      }  
-      setTimeout(() => {
-        this.task_list =[];
-        let data = this.chatService.response;
-        if(data && data['facets']){
-          data['facets'].forEach((element:any) => {
-             let task:any = {} ;
-             task['title'] = element.title;
-             task['subTask'] = [];
-             element.content.forEach((ele:any) => {
-                  task['subTask'] = [...task['subTask'],{name: ele.value, completed: false, color: 'primary'}]
-             });  
-             this.task_list.push(task);         
-          });
-  
-        }
-        this.showPDF = true;
-        }, 2002);
-      
-    
-      
+        'page': "",
+        'loc': "chat-page",
+        //text: this.value
+        'text': this.sample_string
+      }
+      // setTimeout(() => {
+      //   this.task_list = [];
+      //   let data = this.chatService.response;
+      //   if (data && data['facets']) {
+      //     data['facets'].forEach((element: any) => {
+      //       let task: any = {};
+      //       task['title'] = element.title;
+      //       task['subTask'] = [];
+      //       element.content.forEach((ele: any) => {
+      //         task['subTask'] = [...task['subTask'], { name: ele.value, completed: false, color: 'primary' }]
+      //       });
+      //       this.task_list.push(task);
+      //     });
+      //   }
+      // }, 2002);
     }
     this.value = '';
-    //this.sendQuery({});
   }
-  
+
   scrollToBottom() {
     const container = this.scrollContainer.nativeElement;
     container.scrollTop = container.scrollHeight;
   }
-  error: any;
-  page = 1;
-  rotation = 0;
-  zoom = 0.4;
-  zoomScale: ZoomScale = 'page-width';
-  originalSize = false;
-  pdf: any;
-  renderText = true;
-  progressData!: PDFProgressData;
-  isLoaded = false;
-  stickToPage = false;
-  showAll = true;
-  autoresize = true;
-  fitToPage = false;
-  outline!: any[];
-  isOutlineShown = false;
-  pdfQuery = '';
+
   mobile = false;
 
   @ViewChild(PdfViewerComponent)
@@ -136,22 +152,20 @@ export class ChatScreenComponent implements OnInit {
     }
     this.chatService.conversation.subscribe((val) => {
       this.messages = this.messages.concat(val);
-      
       setTimeout(() => {
         this.scrollToBottom();
         this.spinner.hide();
-        }, 1002);
-      
+      }, 1002);
+
     });
   }
-  hidePDF(){
-    
+  hidePDF() {
     this.showPDF = false;
   }
   // Load pdf
   loadPdf() {
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', '../../../assets/pdfs/pdf-test.pdf', true);
+    xhr.open('GET', '../https://stbj3z634zumnje.blob.core.windows.net/content/'+this.chatService.selectedFileName+'?sp=r&st=2023-10-13T04:39:47Z&se=2023-10-31T12:39:47Z&spr=https&sv=2022-11-02&sr=c&sig=KjS4aPl9fHgKGxhz6w5Ji2%2B9tHsECkPY3JRFLBPwBeM%3D', true);
     xhr.responseType = 'blob';
 
     xhr.onload = (e: any) => {
@@ -164,174 +178,41 @@ export class ChatScreenComponent implements OnInit {
     xhr.send();
   }
 
-  /**
-   * Set custom path to pdf worker
-   */
-  setCustomWorkerPath() {
-    (window as any).pdfWorkerSrc = '/lib/pdfjs-dist/build/pdf.worker.js';
+  // onClick(input:any , e:MouseEvent) : void{
+  //   input.helpOpen=!input.helpOpen;
+
+  //   console.log('event element',e);
+  //    if ((e.target as HTMLElement).tagName === 'A') { 
+  //      let target = e.target as HTMLElement;
+  //      alert(target.innerHTML)
+  //    }
+  // }
+  onClick(optionNumber: number) {
+    // Handle the click event with the selected option number
+    console.log(`Button ${optionNumber} clicked.`);
+    // You can perform any desired action with the selected number.
   }
+  public html: string = '<a id="element-a">click a elemnt </a></span>another element</span>';
 
-  incrementPage(amount: number) {
-    this.page += amount;
-  }
-
-  incrementZoom(amount: number) {
-    this.zoom += amount;
-  }
-
-  rotate(angle: number) {
-    this.rotation += angle;
-  }
-
-  /**
-   * Render PDF preview on selecting file
-   */
-  onFileSelected() {
-    const $pdf: any = document.querySelector('#file');
-
-    if (typeof FileReader !== 'undefined') {
-      const reader = new FileReader();
-
-      reader.onload = (e: any) => {
-        this.pdfSrc = e.target.result;
-      };
-
-      reader.readAsArrayBuffer($pdf.files[0]);
-    }
-  }
-
-  /**
-   * Get pdf information after it's loaded
-   * @param pdf pdf document proxy
-   */
-  afterLoadComplete(pdf: PDFDocumentProxy) {
-    this.pdf = pdf;
-
-    this.loadOutline();
-  }
-
-  /**
-   * Get outline
-   */
-  loadOutline() {
-    this.pdf.getOutline().then((outline: any[]) => {
-      this.outline = outline;
-    });
-  }
-
-  /**
-   * Handle error callback
-   *
-   * @param error error message
-   */
-  onError(error: any) {
-    this.error = error; // set error
-
-    if (error.name === 'PasswordException') {
-      const password = prompt(
-        'This document is password protected. Enter the password:'
-      );
-
-      if (password) {
-        this.error = null;
-        this.setPassword(password);
-      }
-    }
-  }
-
-  setPassword(password: string) {
-    let newSrc: PDFSource;
-
-    if (this.pdfSrc instanceof ArrayBuffer) {
-      newSrc = { data: this.pdfSrc as any };
-      // newSrc = { data: this.pdfSrc };
-    } else if (typeof this.pdfSrc === 'string') {
-      newSrc = { url: this.pdfSrc };
-    } else {
-      newSrc = { ...this.pdfSrc };
-    }
-
-    newSrc.password = password;
-
-    this.pdfSrc = newSrc;
-  }
-
-  /**
-   * Pdf loading progress callback
-   * @param progressData pdf progress data
-   */
-  onProgress(progressData: PDFProgressData) {
-    console.log(progressData);
-    this.progressData = progressData;
-
-    this.isLoaded = progressData.loaded >= progressData.total;
-    this.error = null; // clear error
-  }
-
-  getInt(value: number): number {
-    return Math.round(value);
-  }
-
-  /**
-   * Navigate to destination
-   * @param destination pdf navigate to
-   */
-  navigateTo(destination: any) {
-    this.pdfComponent.pdfLinkService.goToDestination(destination);
-  }
-
-  /**
-   * Scroll view
-   */
-  scrollToPage() {
-    this.pdfComponent.pdfViewer.scrollPageIntoView({
-      pageNumber: 3
-    });
-  }
-
-  /**
-   * Page rendered callback, which is called when a page is rendered (called multiple times)
-   *
-   * @param e custom event
-   */
-  pageRendered(e: CustomEvent) {
-    console.log('(page-rendered)', e);
-  }
-
-  /**
-   * Page initialized callback.
-   *
-   * @param {CustomEvent} e
-   */
-  pageInitialized(e: CustomEvent) {
-    console.log('(page-initialized)', e);
-  }
-
-  /**
-   * Page change callback, which is called when a page is changed (called multiple times)
-   *
-   * @param e number
-   */
-  pageChange(e: number) {
-    console.log('(page-change)', e);
-  }
-
-  searchQueryChanged(newQuery: string) {
-    const type = newQuery !== this.pdfQuery ? '' : 'again';
-    this.pdfQuery = newQuery;
-
-    this.pdfComponent.eventBus.dispatch('find', {
-      type,
-      query: this.pdfQuery,
-      highlightAll: true,
-      caseSensitive: false,
-      phraseSearch: true,
-      // findPrevious: undefined,
-    });
-  }
-
-  @HostListener('window:resize', ['$event'])
-  onResize(event: Event) {
-    this.mobile = (event.target as Window).innerWidth <= 768;
+ toggleHelp(input:any , e:MouseEvent) : void{ 
+  this.showPDF = false;    
+    input.helpOpen=!input.helpOpen;
+    console.log('event element',e);
+     if ((e.target as HTMLElement).tagName === 'A') { 
+       let target = e.target as HTMLElement;
+       //alert(target.innerHTML)
+       let num = parseInt(target.innerHTML) - 1
+       //this.chatService.selectedFileName = this.chatService.dataPointList[num].fileName;
+       this.showPDF = true;       
+       let temp =
+       {
+         'page': this.chatService.dataPointList[num].fileName,
+         'loc': 'chat-screen',
+         'text': this.chatService.dataPointList[num].hlText
+       }
+       this.loadDataService.input_pdf_text = temp;
+      
+     }
   }
 }
+

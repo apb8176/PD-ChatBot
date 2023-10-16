@@ -19,6 +19,8 @@
     "@angular/platform-browser": "^16.2.0",
     "@angular/platform-browser-dynamic": "^16.2.0",
     "@angular/router": "^16.2.0",
+    "@azure/msal-angular": "^3.0.5",
+    "@azure/msal-browser": "^3.2.0",
     "botframework-webchat": "^4.15.9",
     "ng2-pdf-viewer": "^10.0.0",
     "ngx-extended-pdf-viewer": "^18.0.1",

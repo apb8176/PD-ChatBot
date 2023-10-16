@@ -1,5 +1,5 @@
 <!-- <div class="bg-white p-5 h-full flex-1" style="width:100vw; grid-template-rows: 1fr auto;"> -->
-<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="small" color="#fff" type="square-jelly-box" [fullScreen]="false">
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="small" color="#fff" type="ball-atom" [fullScreen]="false">
     <p style="color: white"> Loading... </p>
 </ngx-spinner>
 
@@ -43,51 +43,203 @@
         </mat-accordion>
     </div>
     <div class="col-span-9 grid grid-cols-7" style="position: relative ;height:100%; overflow: hidden;">
-        <div class="col-span-4  bg-gray-100 py-5 " style="position: relative ; overflow-y: auto; overflow-x: hidden;">
-            <div style=" padding-bottom:50px; height:100% !important;overflow-y:auto " #scrollContainer
-                class="scroll-container">
-                <ng-container *ngFor="let message of messages">
-                    <div class="message" [ngClass]="{ 'from': message.author === 'bot',
-                    'to': message.author === 'user' }">
+        <div class=" bg-gray-100 py-5 " style="position: relative ; overflow-y: auto; overflow-x: hidden;" 
+            [ngClass]="this.showPDF? 'col-span-4' : 'col-span-7'">
+            <div style="padding:10px; padding-bottom:50px; height:100% !important;overflow-y:auto " #scrollContainer
+                class="scroll-container" *ngIf="(messages.length)">
+                <section *ngFor="let message of messages">
+                    <p class="message" [ngClass]="{ 'from': message.author === 'bot',
+                    'to': message.author === 'user' }" [innerHTML]="message.content" (click)="toggleHelp({},$event)">
 
-                        {{message.content }}
+                        <!-- {{message.content }} -->
+                </p>
+
+                </section>
+            </div>
+            <div *ngIf="false">
+                <svg
+                class="group-34542"
+                width="69"
+                height="69"
+                viewBox="0 0 69 69"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g filter="url(#filter0_d_5527_783)">
+                  <circle
+                    cx="34.5"
+                    cy="34.5"
+                    r="34.5"
+                    fill="url(#paint0_linear_5527_783)"
+                  />
+                </g>
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M35.102 49.3064C36.6149 49.2009 38.1148 48.9553 39.5826 48.5728C41.394 49.1276 43.309 49.2531 45.1769 48.9396C45.2508 48.9276 45.3256 48.9218 45.4005 48.9223C46.067 48.9223 46.9421 49.3108 48.217 50.1307V48.7821C48.2173 48.5487 48.2793 48.3197 48.3968 48.1183C48.5143 47.917 48.683 47.7506 48.8857 47.6362C49.4404 47.3212 49.9564 46.9587 50.4272 46.5594C52.2848 44.9799 53.334 42.8738 53.334 40.6425C53.334 39.8937 53.2158 39.1665 52.9922 38.4717C53.5533 37.4208 54.007 36.316 54.3402 35.1701C55.4177 36.7907 55.995 38.6942 56 40.6425C56 43.6744 54.5939 46.5012 52.1623 48.5684C51.7564 48.9132 51.3291 49.2318 50.883 49.5222V52.6749C50.883 53.7603 49.636 54.3839 48.7567 53.7387C47.9251 53.1149 47.0641 52.5315 46.1767 51.9908C45.9225 51.8382 45.6581 51.7034 45.3855 51.5873C44.6545 51.6974 43.9063 51.7535 43.1516 51.7535C40.1158 51.7535 37.3122 50.8407 35.1042 49.3064H35.102ZM19.0501 43.0011C15.2145 39.7362 13 35.2888 13 30.522C13 20.7835 22.1547 13 33.3326 13C44.5126 13 53.6673 20.7835 53.6673 30.522C53.6673 40.2627 44.5104 48.0462 33.3326 48.0462C32.077 48.0462 30.8343 47.9491 29.6174 47.7549C29.0906 47.8801 26.9858 49.136 23.9521 51.3586C22.8534 52.1656 21.2947 51.3866 21.2947 50.0293V44.6519C20.5091 44.1548 19.7591 43.6032 19.0501 43.0011ZM29.6905 44.4382C29.7829 44.4382 29.8775 44.4447 29.9699 44.4598C31.0665 44.6454 32.1931 44.7403 33.3326 44.7403C42.7754 44.7403 50.3326 38.3142 50.3326 30.522C50.3326 22.7321 42.7754 16.3059 33.3326 16.3059C23.8941 16.3059 16.3325 22.7321 16.3325 30.522C16.3325 34.2897 18.0977 37.8373 21.2194 40.4915C22.0042 41.1561 22.8664 41.7603 23.7909 42.2868C24.309 42.5803 24.6294 43.1284 24.6294 43.7197V46.8206C27.0288 45.2043 28.6068 44.4382 29.6905 44.4382ZM24.6659 33.8301C23.1931 33.8301 21.9999 32.6432 21.9999 31.1845C21.9999 29.7236 23.1931 28.5389 24.6659 28.5389C26.1386 28.5389 27.3319 29.7236 27.3319 31.1845C27.3319 32.6454 26.1386 33.8301 24.6659 33.8301ZM33.3326 33.8301C31.8598 33.8301 30.6666 32.6432 30.6666 31.1845C30.6666 29.7236 31.8598 28.5389 33.3326 28.5389C34.8053 28.5389 35.9986 29.7236 35.9986 31.1845C35.9986 32.6454 34.8053 33.8301 33.3326 33.8301ZM41.9992 33.8301C40.5265 33.8301 39.3332 32.6432 39.3332 31.1845C39.3332 29.7236 40.5265 28.5389 41.9992 28.5389C43.472 28.5389 44.6652 29.7236 44.6652 31.1845C44.6652 32.6454 43.472 33.8301 41.9992 33.8301Z"
+                  fill="white"
+                />
+                <defs>
+                  <filter
+                    id="filter0_d_5527_783"
+                    x="-8"
+                    y="-4"
+                    width="85"
+                    height="85"
+                    filterUnits="userSpaceOnUse"
+                    color-interpolation-filters="sRGB"
+                  >
+                    <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                    <feColorMatrix
+                      in="SourceAlpha"
+                      type="matrix"
+                      values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                      result="hardAlpha"
+                    />
+                    <feOffset dy="4" />
+                    <feGaussianBlur stdDeviation="4" />
+                    <feComposite in2="hardAlpha" operator="out" />
+                    <feColorMatrix
+                      type="matrix"
+                      values="0 0 0 0 0.72549 0 0 0 0 0.72549 0 0 0 0 0.839216 0 0 0 0.75 0"
+                    />
+                    <feBlend
+                      mode="normal"
+                      in2="BackgroundImageFix"
+                      result="effect1_dropShadow_5527_783"
+                    />
+                    <feBlend
+                      mode="normal"
+                      in="SourceGraphic"
+                      in2="effect1_dropShadow_5527_783"
+                      result="shape"
+                    />
+                  </filter>
+                  <linearGradient
+                    id="paint0_linear_5527_783"
+                    x1="7"
+                    y1="15"
+                    x2="125"
+                    y2="85"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop stop-color="#31B3AE" />
+                    <stop offset="1" stop-color="#1487FF" />
+                  </linearGradient>
+                </defs>
+              </svg>
+            
+              <div class="title2">Next Generation of AI</div>
+              <div class="rectangle-7034"></div>
+              <div class="rectangle-7035"></div>
+              <div class="mask-group">
+                <img class="speech-bubble-1" src="speech-bubble-1.png" />
+                <div class="rectangle-7037"></div>
+              </div>
+              <div class="mask-group">
+                <img class="ai-1" src="ai-1.png" />
+                <div class="rectangle-7038"></div>
+              </div>
+              <div class="examples">Examples</div>
+              <div class="capabilities">Capabilities</div>
+              <div class="rectangle-7046"></div>
+              <div class="rectangle-7050"></div>
+              <div class="rectangle-7043"></div>
+              <div class="rectangle-7044"></div>
+              <div class="rectangle-7048"></div>
+              <div class="rectangle-7045"></div>
+              <div class="rectangle-7049"></div>
+              <div class="rectangle-7051"></div>
+              <div class="lorem-ipsum-dolor-sit-amet-consectetur-adipiscing">
+                Lorem ipsum dolor sit amet, consectetur adipiscing
+              </div>
+              <div class="lorem-ipsum-dolor-sit-amet-consectetur-adipiscing2">
+                Lorem ipsum dolor sit amet, consectetur adipiscing
+              </div>
+              <div class="lorem-ipsum-dolor-st-met-ipsum">
+                Lorem ipsum dolor st met ipsum
+              </div>
+              <div class="lorem-ipsum-dolor-st-met-ipsum2">
+                Lorem ipsum dolor st met ipsum
+              </div>
+              <div class="lorem-ipsum-dolor-st-met-ipsum3">
+                Lorem ipsum dolor st met ipsum
+              </div>
+              <div class="lorem-ipsum-dolor-st-met-ipsum4">
+                Lorem ipsum dolor st met ipsum
+              </div>
+              <div class="lorem-ipsum-dolor-st-met-ipsum5">
+                Lorem ipsum dolor st met ipsum
+              </div>
+            </div>
+            <div class="flex justify-center items-center" *ngIf="!(messages.length)">
+                
+                <div class="mt-36 border-solid border-1 border-gray" style="display:inline-block; justify-items: center;text-align: center;">
+                    <div style="display: flex; text-align: center;justify-content: center;"><img src="../../../assets/logo/chatPH1.svg"/></div>
+                    <mat-label class="place-holder-main-title text-center">Next Generation of AI</mat-label><br><br>
+                    <div style="display:inline-block; justify-items: center;">
+                        <mat-card style="display:inline-block; text-align: center; width:250px; height:300px" class="m-2">
+                            <div style="display: flex; text-align: center;justify-content: center;"><img style="height:60px; width:60px; margin-top: 20px;"  src="../../../assets/logo/chatPH2.svg"/></div>
+                            <mat-label class="place-holder-title text-center">Capabilities</mat-label><br><br>
+                            <div class="ph-sub mt-2 text-center inline-block mx-4"><mat-label class="ph-sub-title">Lorem ipsum dolor st met ipsum</mat-label></div>
+                            <div class="ph-sub mt-2 inline-block mx-4"><mat-label class="ph-sub-title">Lorem ipsum dolor st met ipsum</mat-label></div>
+                            <div class="ph-sub mt-2 inline-block mx-4"><mat-label class="ph-sub-title">Lorem ipsum dolor st met ipsum</mat-label></div>
+                            <div class="ph-sub mt-2 inline-block mx-4"><mat-label class="ph-sub-title">Lorem ipsum dolor st met ipsum</mat-label></div>
+                        </mat-card>
+                        <mat-card style="display:inline-block; text-align: center; width:250px; height:300px" class="m-2">
+                            <div style="display: flex; text-align: center;justify-content: center;"><img style="height:60px; width:60px; margin-top: 20px;"  src="../../../assets/logo/chatPH3.svg"/></div>
+                            <mat-label class="place-holder-title text-center">Capabilities</mat-label><br><br>
+                            <div class="ph-sub mt-2 text-center inline-block mx-4"><mat-label class="ph-sub-title">Lorem ipsum dolor st met ipsum</mat-label></div>
+                            <div class="ph-sub mt-2 inline-block mx-4"><mat-label class="ph-sub-title">Lorem ipsum dolor st met ipsum</mat-label></div>
+                            <div class="ph-sub mt-2 inline-block mx-4"><mat-label class="ph-sub-title">Lorem ipsum dolor st met ipsum</mat-label></div>
+                            <div class="ph-sub mt-2 inline-block mx-4"><mat-label class="ph-sub-title">Lorem ipsum dolor st met ipsum</mat-label></div>
+                        </mat-card>
                     </div>
-
-                </ng-container>
+                </div>
             </div>
             <div class="bg-gray-100 box-wrapper ">
-                <!-- <mat-form-field class="w-full border-solid"> -->
-                <!-- <div class="bg-white m-3">
-                        <input class="py-5 h-full" style="height:80px" matInput placeholder="Enter a query..."
-                        [(ngModel)]="value" (keyup.enter)="sendMessage()" type="text" name="fieldName11">
-                        <mat-icon matSuffix (click)="sendMessage()" class="send-icon">send</mat-icon>
-                    </div> -->
+              <!-- <div class="flex mb-2 justify-center">
+                <button mat-button
+                  class="w-[177px] h-[33px] bg-teal-500 bg-opacity-75 rounded-[5px] text-white text-[13px] font-normal font-['Poppins']">
+                  <mat-icon class="material-symbols-rounded align-middle">
+                    picture_as_pdf
+                    </mat-icon>
+                  <mat-label class="align-middle">&nbsp; View relevant  PDF </mat-label>
+                </button>
+              </div> -->
+                
                 <!-- <div class="w-full h-3"><mat-icon matSuffix (click)="sendMessage()" class="send-icon"></mat-icon></div> -->
-                <div class="flex space-x-4 mx-3">
+                <div class="flex space-x-4 w-[30rem] h-[3rem]" >
                     <div class="flex rounded-md w-full ">
-                        <input type="text" class="w-full rounded-md rounded-r-none p-3" style="outline: none;"
+                        <input type="text" class="w-full rounded-md rounded p-3 input-search text-md pl-5" style="outline: none;"
                             placeholder="Enter a query..." [(ngModel)]="value" (keyup.enter)="sendMessage()" type="text"
                             name="fieldName11" />
                         <!-- <button class="bg-indigo-600 text-white px-6 text-lg font-semibold py-4 rounded-r-md">Go</button> -->
                     </div>
-                    <button class="bg-primary px-6 text-lg font-semibold py-4 rounded-md"
+                    <button class="bg-primary p-[32x] text-lg font-semibold  rounded-md send w-[3.5rem] h-[3rem]" [disabled]="!(value.length)"
                         (click)="sendMessage()"><mat-icon matSuffix
-                            class=" send-icon text-white">send</mat-icon></button>
+                            class=" send-icon text-white p-[5px]">send</mat-icon>
+                    </button>
                 </div>
                 <!-- </mat-form-field> -->
             </div>
         </div>
-        <div class="col-span-3 overflow: auto; py-5" *ngIf="this.showPDF">
-            <div id="corner-triangle">
-                <div class="corner-triangle-text"><a (click)="hidePDF()"><span
-                            class="corner-triangle-firstline"><mat-icon>
-                                close
-                            </mat-icon></span><br></a></div>
-            </div>
-            <app-example-pdf-viewer [template]="input_string">
+        <div class="col-span-3 overflow: auto; " *ngIf="this.showPDF">
+            <div id="menu">
+                <input type="checkbox" id="menu-toggle"/>
+                <ul class="ul-tm">
+                  <li class="li-tm" >
+                    <button (click)="openDialog()"><mat-icon class="text-white">fullscreen</mat-icon></button>
+                  </li><li class="li-tm" >
+                    <button (click)="this.showPDF = false"><mat-icon class="text-white">cancel</mat-icon></button>
+                  </li>
+                </ul>
+              </div>
+            <app-example-pdf-viewer [template]="input_string" *ngIf="this.load">
 
             </app-example-pdf-viewer>
         </div>
     </div>
 </div>
+
 <!-- </div> -->

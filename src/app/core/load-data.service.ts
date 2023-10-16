@@ -8,6 +8,7 @@ export class LoadDataService {
 
   _input_pdf_text: any = {
     page: " ",
+    loc:" ",    
     text: ""
   }
   subject_highlight = new Subject();

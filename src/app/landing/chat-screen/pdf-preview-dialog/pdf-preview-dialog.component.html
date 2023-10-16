@@ -1,0 +1,45 @@
+
+<div class="popup">
+    <!-- <div class="sticky-modal-header grid grid-cols-2">
+        <div></div>
+        <div>
+        
+        </div>
+    </div><br> -->
+    <div align="right" class="p-2">  
+        
+        <span (click)="onNoClick()" class="cursor-pointer material-symbols-rounded border rounded-md border-teal-500 text-teal-500 hover:bg-teal-500 hover:text-white">
+            close
+        </span>
+        
+      
+    </div>
+    <app-example-pdf-viewer [template]="input_string1"  *ngIf="load"></app-example-pdf-viewer>
+    <div class="sticky-modal-footer grid grid-cols-2">
+        <div>
+            <div class="flex justify-start p-1 py-2"><mat-label class="text-teal-500 text-[11px] font-normal font-['Poppins']">Page No. 28</mat-label></div>
+        </div>
+        <div>
+            <div class="flex justify-end p-[0.1875rem]">
+                <button class="w-fit border border-teal-500 outline-none text-teal-500 block font-bold rounded-tl-lg rounded-bl-lg p-1 mr-1 flex items-center hover:bg-teal-500 hover:text-white">
+                    <span class="material-symbols-rounded">
+                        chevron_left
+                        </span>
+                    
+                </button>
+                <button class="w-fit border border-teal-500 outline-none bg-teal-500 text-white block rounded-tr-lg rounded-br-lg  font-bold p-1 ml-1 flex items-center">
+                    
+                    <span class="material-symbols-rounded">
+                        chevron_right
+                        </span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- <div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button>
+</div> -->

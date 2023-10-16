@@ -11,7 +11,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { ExamplePdfViewerComponent } from 'src/app/example-pdf-viewer/example-pdf-viewer.component';
-
+import {MatDialogModule} from '@angular/material/dialog';
 import { MatSelectModule } from "@angular/material/select";
 import { PdfViewerModule } from 'src/app/pdf-viewer/pdf-viewer.module';
 import { MatButtonModule } from '@angular/material/button';
@@ -19,11 +19,16 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import {MatCardModule} from '@angular/material/card';
+import { PdfPreviewComponent } from './pdf-preview/pdf-preview.component';
+import { PdfPreviewDialogComponent } from './pdf-preview-dialog/pdf-preview-dialog.component';
 
 @NgModule({
   declarations: [
     ChatScreenComponent,
-    ExamplePdfViewerComponent
+    ExamplePdfViewerComponent,
+    PdfPreviewComponent,
+    PdfPreviewDialogComponent
   ],
   imports: [
     CommonModule,
@@ -42,7 +47,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatTooltipModule,
     MatIconModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatCardModule,
+    MatDialogModule
   ],
   exports: [
     MatButtonModule,
@@ -57,7 +64,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     FormsModule,
     MatCheckboxModule,
     PdfViewerModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatDialogModule
   ],
     
   

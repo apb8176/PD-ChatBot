@@ -134,3 +134,26 @@
     opacity: 0;
   }
 }
+::-webkit-scrollbar {
+  margin-top: 2px;
+  width: 7px;
+  
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgb(219, 216, 216);
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(180, 177, 177);
+  border-radius: 10px;
+}

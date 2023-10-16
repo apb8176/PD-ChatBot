@@ -14,13 +14,16 @@ module.exports = {
       },
       colors: {
         gray: {
-          100: 'rgba(242, 242, 247, 0.60)',
+          100: 'rgba(242, 242, 247)',
           // ...
           900: '#1a202c',
         },
         'primary': '#6FCD82',
         "base-shade-100": "var(--base-shade-100)",
         "light-black": "var(--light-black)",
+        'slate-600':"#436879",
+        'teal-500':"rgba(49, 179, 174, 0.75)",
+        
       },
     },
   },

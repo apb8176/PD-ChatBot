@@ -5,11 +5,24 @@
     position: relative;
     font-size: 14px;
   }
+  .message.to:before {
+    content: "";
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    border-left: 15px solid theme('colors.slate-600');
+    border-right: 15px solid transparent;
+    border-top: 15px solid theme('colors.slate-600');
+    border-bottom: 15px solid transparent;
+    right: -16px;
+    top: 0px;
+  }
   .message.to {
-    background-color: #6FCD82;
+    background-color: theme('colors.slate-600');
     color: #fff;
-    margin-left: 300px;
-    text-align: right;
+    margin-left: 450px;
+    
+    text-align: justify;
     border-radius: 5px;
   }
   .message.from {
@@ -18,25 +31,58 @@
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     margin-right: 300px;
     border-radius: 5px;
+    text-align: justify;
+  }
+  .message.from:before {
+    content: "";
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    border-left: 15px solid transparent;
+    border-right: 15px solid #ffffff;
+    border-top: 15px solid #ffffff;
+    border-bottom: 15px solid transparent;
+    left: -16px;
+    top: 0px;
   }
   .message.to + .message.to,
   .message.from + .message.from {
     margin-top: -10px;
   }
   .box-wrapper {
+    // position: fixed;
+    // justify-content: center;
+    // bottom: 0; /* Place the child div at the bottom */
+    // width: 100%;
+    // //right: 0;
+    // background-color: rgba(242, 242, 247) !important;
+    // height: 60px;
     position: absolute;
+    display: grid;
+    left: 0px;
     justify-content: center;
-    bottom: 0; /* Place the child div at the bottom */
+    bottom: 1.125rem;
     width: 100%;
-    //right: 0;
-    height: 80px;
+    background-color: rgb(242, 242, 247) !important;
+    height: 47px;
    
   }
+  .custom-dialog-container{
+    border-radius: 5px 5px 0px 0px;
+    border-top: 3px solid #31B3AE;       
+    overflow: hidden !important; 
+  }
   .send-icon{
-    background-color:#6FCD82;
+    background-color:transparent;
     color: #fff;
     border-radius: 5px;
-    font-size: 27px;
+    font-size: 16px;
+    margin: 3px;
+    -webkit-transform: rotate(325deg); 
+    -moz-transform: rotate(325deg);
+    -ms-transform: rotate(325deg);
+    -o-transform: rotate(325deg);
+    transform: rotate(325deg);
   }
   ::ng-deep.mdc-line-ripple{
     visibility: hidden !important;
@@ -93,6 +139,9 @@
     right: 0;
     z-index: 100;
   }
+  .input-search:focus{
+    filter: drop-shadow(5px 5px 5px rgba(0,0,0,0.3));
+  }
   
   .select-file__container {
     margin-top: 10px;
@@ -143,11 +192,11 @@
     transition: 0.5s width;
   }
   
-  .outline-list li a {
+  .outline-list li button {
     cursor: pointer;
   }
   
-  .outline-list li a:hover {
+  .outline-list li button:hover {
     color: #ea1f62;
   }
   
@@ -244,7 +293,7 @@
   // div#corner-triangle .corner-triangle-text span.corner-triangle-firstline {
   //   margin-left: 29px;
   // }
-  div#corner-triangle .corner-triangle-text a {
+  div#corner-triangle .corner-triangle-text button {
     color: white;
   }
   div#corner-triangle .corner-triangle-text a:hover,
@@ -254,3 +303,366 @@
   div#corner-triangle .corner-triangle-text a:focus {
     text-decoration: none;
   }
+
+
+  .send{
+    outline: none;
+  }
+  .send:disabled{
+    background-color: rgb(179, 174, 174);
+  }
+  .send:hover{
+    box-shadow: 0px 3.29px 14.79px 0px rgba(185, 185, 214, 0.25);
+  }
+
+
+
+  //new chat - when empty
+  .group-34542 {
+    position: absolute;
+    left: 861px;
+    top: 180px;
+    overflow: visible;
+  }
+  
+.title2 {
+  color: var(--base-shade-100, #000000);
+  text-align: left;
+  font: 500 28px "Poppins", sans-serif;
+  position: absolute;
+  left: 747px;
+  top: 255px;
+}
+.rectangle-7034 {
+  background: #ffffff;
+  border-radius: 4.11px;
+  width: 242px;
+  height: 265px;
+  position: absolute;
+  left: 641px;
+  top: 349px;
+  box-shadow: 0px 3.29px 14.79px 0px rgba(185, 185, 214, 0.25);
+}
+.rectangle-7035 {
+  background: #ffffff;
+  border-radius: 4.11px;
+  width: 242px;
+  height: 265px;
+  position: absolute;
+  left: 907px;
+  top: 349px;
+  box-shadow: 0px 3.29px 14.79px 0px rgba(185, 185, 214, 0.25);
+}
+.mask-group {
+  position: absolute;
+  inset: 0;
+}
+.speech-bubble-1 {
+  width: 38px;
+  height: 38px;
+  position: absolute;
+  left: 741px;
+  top: 364px;
+}
+.rectangle-7037 {
+  background: linear-gradient(
+    180deg,
+    rgba(49, 179, 174, 1) 0%,
+    rgba(20, 135, 255, 1) 100%
+  );
+  width: 40.15px;
+  height: 36.66px;
+  position: absolute;
+  left: 741px;
+  top: 364px;
+}
+.ai-1 {
+  width: 32px;
+  height: 32px;
+  position: absolute;
+  left: 1012px;
+  top: 367px;
+}
+.rectangle-7038 {
+  background: linear-gradient(
+    180deg,
+    rgba(49, 179, 174, 1) 0%,
+    rgba(20, 135, 255, 1) 100%
+  );
+  width: 36.12px;
+  height: 37.62px;
+  position: absolute;
+  left: 1010.62px;
+  top: 365.56px;
+}
+.examples {
+  color: #436879;
+  text-align: left;
+  font: 500 14.79px "Poppins", sans-serif;
+  position: absolute;
+  left: 724px;
+  top: 406px;
+}
+.capabilities {
+  color: #436879;
+  text-align: left;
+  font: 500 14.79px "Poppins", sans-serif;
+  position: absolute;
+  left: 983px;
+  top: 406px;
+}
+.rectangle-7046 {
+  background: #f7f7fa;
+  width: 213px;
+  height: 47px;
+  position: absolute;
+  left: 655px;
+  top: 544px;
+}
+.rectangle-7050 {
+  background: #f7f7fa;
+  width: 213px;
+  height: 47px;
+  position: absolute;
+  left: 921px;
+  top: 510px;
+}
+.rectangle-7043 {
+  background: #f7f7fa;
+  width: 213px;
+  height: 28px;
+  position: absolute;
+  left: 655px;
+  top: 442px;
+}
+.rectangle-7044 {
+  background: #f7f7fa;
+  width: 213px;
+  height: 28px;
+  position: absolute;
+  left: 655px;
+  top: 476px;
+}
+.rectangle-7048 {
+  background: #f7f7fa;
+  width: 213px;
+  height: 28px;
+  position: absolute;
+  left: 921px;
+  top: 442px;
+}
+.rectangle-7045 {
+  background: #f7f7fa;
+  width: 213px;
+  height: 28px;
+  position: absolute;
+  left: 655px;
+  top: 510px;
+}
+.rectangle-7049 {
+  background: #f7f7fa;
+  width: 213px;
+  height: 28px;
+  position: absolute;
+  left: 921px;
+  top: 476px;
+}
+.rectangle-7051 {
+  background: #f7f7fa;
+  width: 213px;
+  height: 28px;
+  position: absolute;
+  left: 921px;
+  top: 563px;
+}
+.lorem-ipsum-dolor-sit-amet-consectetur-adipiscing {
+  color: #436879;
+  text-align: left;
+  font: 400 12px "Poppins", sans-serif;
+  position: absolute;
+  left: 665px;
+  top: 548px;
+  width: 194.77px;
+}
+.lorem-ipsum-dolor-sit-amet-consectetur-adipiscing2 {
+  color: #436879;
+  text-align: left;
+  font: 400 12px "Poppins", sans-serif;
+  position: absolute;
+  left: 931px;
+  top: 514px;
+  width: 194.77px;
+}
+.lorem-ipsum-dolor-st-met-ipsum {
+  color: #436879;
+  text-align: left;
+  font: 400 12px "Poppins", sans-serif;
+  position: absolute;
+  left: 665px;
+  top: 446px;
+  width: 194.77px;
+}
+.lorem-ipsum-dolor-st-met-ipsum2 {
+  color: #436879;
+  text-align: left;
+  font: 400 12px "Poppins", sans-serif;
+  position: absolute;
+  left: 665px;
+  top: 480px;
+  width: 194.77px;
+}
+.lorem-ipsum-dolor-st-met-ipsum3 {
+  color: #436879;
+  text-align: left;
+  font: 400 12px "Poppins", sans-serif;
+  position: absolute;
+  left: 931px;
+  top: 446px;
+  width: 194.77px;
+}
+.lorem-ipsum-dolor-st-met-ipsum4 {
+  color: #436879;
+  text-align: left;
+  font: 400 12px "Poppins", sans-serif;
+  position: absolute;
+  left: 665px;
+  top: 514px;
+  width: 194.77px;
+}
+.lorem-ipsum-dolor-st-met-ipsum5 {
+  color: #436879;
+  text-align: left;
+  font: 400 12px "Poppins", sans-serif;
+  position: absolute;
+  left: 931px;
+  top: 480px;
+  width: 194.77px;
+}
+.place-holder-title{
+  color: var(--base-shade-100, #000);
+font-family: Poppins;
+font-size: 28px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+}
+
+.place-holder-title{
+  color: #436879;
+  font-family: Poppins;
+  font-size: 14.793px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+.place-holder-main-title{
+  color: #436879;
+  font-family: Poppins;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.ph-sub-title{
+  color: #436879;
+  font-family: Poppins;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.ph-sub{
+  width: 213px;
+height: 28px;
+flex-shrink: 0;
+background: #F7F7FA;
+}
+
+
+///////////////////Toggle menu
+
+html, body{
+  margin:0;
+  padding:0;
+  font-family:sans-serif;
+}
+
+#menu{
+  position:absolute;
+  top:1.9375rem;
+  margin-left:10px;
+  z-index:500;
+  height:50px;
+  border-radius:25px;
+  overflow:hidden;
+  background:theme('colors.slate-600');
+  box-shadow:0px 0px 10px rgba(0,0,0,.5);
+  transition:all .5s ease;
+  
+  &>*{
+    float:left;
+  }
+}
+
+#menu-toggle{
+  display:block;
+  cursor:pointer;
+  opacity:0;
+  z-index:999;
+  margin:0;
+  width:50px;
+  height:50px;
+  position:absolute;
+  top:0;
+  left:0;
+
+  &:checked~ul{
+    width:150px;
+    background-position:0px -50px;
+  }
+}
+
+.ul-tm{
+  list-style-type:none;
+  margin:0;
+  padding:0 0 0 50px;
+  height:50px;
+  width:0px;
+  transition:.5s width ease;
+  background-image:url("https://i.imgur.com/3d0vJzn.png");
+  background-repeat:no-repeat;
+  background-position:0px 0px;
+}
+
+.li-tm{
+  display:inline-block;
+  line-height:50px;
+  width:50px;
+  text-align:center;
+  margin:0;
+  padding: 5px;
+  a{
+    font-size:1.25em;
+    font-weight:bold;
+    color:white;
+    text-decoration:none;
+  }
+}
+
+a.custom-button {
+  background-color: #007bff; /* Change to your desired background color */
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  margin: 0 5px;
+  cursor: pointer;
+  transition: background-color 0.3s; /* Add a smooth transition for the hover effect */
+
+  /* Add more styles as needed */
+}
+
+a.custom-button:hover {
+  background-color: #0056b3; /* Change to your desired hover background color */
+  /* Add more hover styles as needed */
+}
