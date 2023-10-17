@@ -93,7 +93,7 @@ export class ExamplePdfViewerComponent implements OnInit {
         setTimeout(() => {
           //this.zoomScale = newValue['loc'] == 'popup'?'page-width':'page-fit'
           this.searchQueryChanged(newValue['text']);
-        }, 1000)
+        }, 2000)
       }
     });
     // setTimeout(()=>{ this.searchQueryChanged('download');},500)

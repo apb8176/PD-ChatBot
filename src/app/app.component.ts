@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { EventMessage, InteractionStatus,EventType } from '@azure/msal-browser';
 import { Subject, filter, takeUntil } from 'rxjs';
-import { environment } from './environments/environment.prod';
 import { MsalBroadcastService, MsalService } from '@azure/msal-angular';
 
 @Component({
@@ -49,9 +48,27 @@ export class AppComponent {
 
         this.setLoginDisplay();
       })
-    }
+      // this.msalBroadcastService.msalSubject$
+      // .pipe(
+      //   filter((msg: EventMessage) => msg.eventType === EventType.ACQUIRE_TOKEN_SUCCESS),
+      //   takeUntil(this._destroying$)
+      // )
+      // .subscribe((result: EventMessage) => {
+      //   console.log('Result',result);
+        
+      //   //let temp = result['payload']['accessToken'];
+      //   //localStorage.setItem('currentToken', temp);
+      //   // Do something with event payload here
+      // });
+  }
+  
+    // ngOnDestroy(): void {
+    //   this._destroying$.next(undefined);
+    //   this._destroying$.complete();
+    // }
+    
     setLoginDisplay() {
       this.loginDisplay = this.authService.instance.getAllAccounts().length > 0;
     }
-  
+   
 }
