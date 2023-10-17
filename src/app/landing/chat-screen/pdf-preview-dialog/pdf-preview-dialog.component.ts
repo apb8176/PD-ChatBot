@@ -13,41 +13,67 @@ export interface DialogData {
   styleUrls: ['./pdf-preview-dialog.component.scss']
 })
 export class PdfPreviewDialogComponent {
-  input_string1 : any;
-  load : boolean = false;
-  constructor( private loadDataService : LoadDataService,
+  input_string1: any;
+  load: boolean = false;
+  pageNo: any;
+  constructor(private loadDataService: LoadDataService,
     public dialogRef: MatDialogRef<PdfPreviewDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
   ) {
-  
-    
+
+
   }
-  ngOnInit(){
+  ngOnInit() {
     this.load = true;
-    // let val = JSON.parse(JSON.stringify(this.loadDataService.input_pdf_text));
-    //   val.loc = 'popup'
-    
-    //     this.loadDataService.input_pdf_text = val;
-    setTimeout(()=>{ 
+    setTimeout(() => {
       let val = JSON.parse(JSON.stringify(this.loadDataService.input_pdf_text));
-      val.loc = 'popup'
-      if(val.text.length){
+      //val.loc = 'popup'
+      if (val.text.length) {
         this.loadDataService.input_pdf_text = val;
-      }      
-    },500)
+      }
+
+      let match = val.page.match(/-(\d+)\.pdf/);
+      console.log('-------', val.page, match);
+      this.pageNo = match[1];
+
+    }, 800)
 
   }
-
-  onNoClick(): void {
-    
-    let val = JSON.parse(JSON.stringify(this.loadDataService.input_pdf_text));
-    let temp = 
-    {
-      'page':'',
-      'loc' : 'chat-screen',
-      'text':val.text
-    }
-    this.loadDataService.input_pdf_text =temp;
+  onNoClick(): void {    
     this.dialogRef.close();
+  }
+  nextPage() {
+    let pageNum = parseInt(this.pageNo);
+    pageNum += 1;
+    let pn = pageNum.toString();
+    let newPage = this.loadDataService.input_pdf_text.page.replace(this.pageNo, pn);
+    let val = JSON.parse(JSON.stringify(this.loadDataService.input_pdf_text));
+    let temp =
+    {
+      'page': newPage,
+      'loc': val.loc,
+      'text': val.text
+    }
+    console.log('--------newpage=', newPage);
+
+    this.loadDataService.input_pdf_text = temp;
+    this.pageNo = pn;
+  }
+  previousPage() {
+    let pageNum = parseInt(this.pageNo);
+    pageNum -= 1;
+    let pn = pageNum.toString();
+    let newPage = this.loadDataService.input_pdf_text.page.replace(this.pageNo, pn);
+    let val = JSON.parse(JSON.stringify(this.loadDataService.input_pdf_text));
+    let temp =
+    {
+      'page': newPage,
+      'loc': val.loc,
+      'text': val.text
+    }
+    console.log('--------newpage=', newPage);
+
+    this.loadDataService.input_pdf_text = temp;
+    this.pageNo = pn;
   }
 }

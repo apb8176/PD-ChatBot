@@ -180,7 +180,7 @@
                     <div style="display:inline-block; justify-items: center;">
                         <mat-card style="display:inline-block; text-align: center; width:250px; height:300px" class="m-2">
                             <div style="display: flex; text-align: center;justify-content: center;"><img style="height:60px; width:60px; margin-top: 20px;"  src="../../../assets/logo/chatPH2.svg"/></div>
-                            <mat-label class="place-holder-title text-center">Capabilities</mat-label><br><br>
+                            <mat-label class="place-holder-title text-center">Examples</mat-label><br><br>
                             <div class="ph-sub mt-2 text-center inline-block mx-4"><mat-label class="ph-sub-title">Lorem ipsum dolor st met ipsum</mat-label></div>
                             <div class="ph-sub mt-2 inline-block mx-4"><mat-label class="ph-sub-title">Lorem ipsum dolor st met ipsum</mat-label></div>
                             <div class="ph-sub mt-2 inline-block mx-4"><mat-label class="ph-sub-title">Lorem ipsum dolor st met ipsum</mat-label></div>
@@ -229,13 +229,13 @@
                 <input type="checkbox" id="menu-toggle"/>
                 <ul class="ul-tm">
                   <li class="li-tm" >
-                    <button (click)="openDialog()"><mat-icon class="text-white">fullscreen</mat-icon></button>
+                    <a (click)="openDialog()"><mat-icon class="text-white">fullscreen</mat-icon></a>
                   </li><li class="li-tm" >
-                    <button (click)="this.showPDF = false"><mat-icon class="text-white">cancel</mat-icon></button>
+                    <a (click)="this.showPDF = false"><mat-icon class="text-white">cancel</mat-icon></a>
                   </li>
                 </ul>
               </div>
-            <app-example-pdf-viewer [template]="input_string" *ngIf="this.load">
+            <app-example-pdf-viewer [template]="'chat-screen'" *ngIf="this.load">
 
             </app-example-pdf-viewer>
         </div>

@@ -60,14 +60,14 @@ export class ChatScreenComponent implements OnInit {
 
   allComplete: any = [];
   openDialog(): void {
-    let val = JSON.parse(JSON.stringify(this.loadDataService.input_pdf_text));
-    let temp =
-    {
-      'page': '',
-      'loc': 'popup',
-      'text': val.text
-    }
-    this.loadDataService.input_pdf_text = temp;
+    // let val = JSON.parse(JSON.stringify(this.loadDataService.input_pdf_text));
+    // let temp =
+    // {
+    //   'page': val.page,
+    //   'loc':  val.loc,
+    //   'text': val.text
+    // }
+    // this.loadDataService.input_pdf_text = temp;
 
     const dialogRef = this.dialog.open(PdfPreviewDialogComponent, {
       width: '91.1875rem',

@@ -26,7 +26,7 @@ export class ExamplePdfViewerComponent implements OnInit {
 
   private _myVariable: BehaviorSubject<string> = new BehaviorSubject('initial value');
   // @Input() template: Observable<string> = this._myVariable.asObservable();
-  @Input() template!: Observable<string>;
+  @Input() template: string = '';
 
   page: any = 1;
   rotation: any = 0;
@@ -54,15 +54,21 @@ export class ExamplePdfViewerComponent implements OnInit {
   constructor(private loadDataService: LoadDataService, private chatService: ChatService, private spinner: NgxSpinnerService) { }
   ngOnInit() {
     this.spinner.show();
+    //console.log('--------template-----------',this.template);
+    
     setTimeout(() => {
+      
       this.pdfSrc = 'https://stbj3z634zumnje.blob.core.windows.net/content/' + this.loadDataService.input_pdf_text.page + '?sp=r&st=2023-10-13T04:39:47Z&se=2023-10-31T12:39:47Z&spr=https&sv=2022-11-02&sr=c&sig=KjS4aPl9fHgKGxhz6w5Ji2%2B9tHsECkPY3JRFLBPwBeM%3D';
       this.spinner.hide();
-
+      
     }, 500);
     setTimeout(() => {
+      this.zoomScale = this.template == 'popup' ?  'page-width' : 'page-fit';
       //this.zoomScale = newValue['loc'] == 'popup'?'page-width':'page-fit'
       this.searchQueryChanged(this.loadDataService.input_pdf_text.text);
-    }, 1500)
+      console.log('===========high 1=================');
+      
+    }, 1000)
 
     if (window.screen.width <= 768) {
       this.mobile = true;
@@ -70,33 +76,25 @@ export class ExamplePdfViewerComponent implements OnInit {
     this.myGroup = new FormGroup({
       firstName: new FormControl()
     });
-    // setTimeout(()=>{ 
-    //   let name = this.chatService.selectedFileName;
-    //   console.log('-------currentFile',name);
-    //   //this.pdfSrc = 'https://stbj3z634zumnje.blob.core.windows.net/content/'+name+'?sp=r&st=2023-10-13T04:39:47Z&se=2023-10-31T12:39:47Z&spr=https&sv=2022-11-02&sr=c&sig=KjS4aPl9fHgKGxhz6w5Ji2%2B9tHsECkPY3JRFLBPwBeM%3D'
-    //   let val = this.loadDataService.input_pdf_text;
-    //   val['text'].length?this.searchQueryChanged(val['text']):'';
-    // },500)
-
-    // let val = JSON.parse(JSON.stringify(this.loadDataService.input_pdf_text));
-    // this.zoomScale = val['loc'] == 'popup'?'page-width':'page-fit'
-    // this.searchQueryChanged(val['text']);
     this.loadDataService._pdfData$.subscribe((newValue: any) => {
+      console.log('--------template-----------',this.template);
       console.log('---------pdf Data', newValue);
-
+      this.zoomScale = ((this.template) == 'popup' ?  'page-width' : 'page-fit');
       if (newValue['page']) {
         let name = newValue['page'];
         this.pdfSrc = 'https://stbj3z634zumnje.blob.core.windows.net/content/' + name + '?sp=r&st=2023-10-13T04:39:47Z&se=2023-10-31T12:39:47Z&spr=https&sv=2022-11-02&sr=c&sig=KjS4aPl9fHgKGxhz6w5Ji2%2B9tHsECkPY3JRFLBPwBeM%3D'
-        this.zoomScale = newValue['loc'] == 'popup' ? 'page-width' : 'page-fit'
+        //this.zoomScale = newValue['loc'] == 'popup' ? 'page-width' : 'page-fit'
+        
       }
       if (newValue['text']) {
         setTimeout(() => {
           //this.zoomScale = newValue['loc'] == 'popup'?'page-width':'page-fit'
           this.searchQueryChanged(newValue['text']);
-        }, 2000)
+          console.log('===========high 2=================');
+        }, 1000)
       }
     });
-    // setTimeout(()=>{ this.searchQueryChanged('download');},500)
+    
 
   }
 
