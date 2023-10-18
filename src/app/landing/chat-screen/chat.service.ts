@@ -138,6 +138,9 @@ export class ChatService {
        // }        
     });
     replacedText = this.replacePlaceholdersWithButtons(replacedText);
+    replacedText = replacedText.replaceAll(/\n/g, '<br/>')
+    console.log('============',replacedText );
+    
     replacedText = this.sanitizer.bypassSecurityTrustHtml(replacedText);
     return replacedText;
 
