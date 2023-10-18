@@ -48,24 +48,24 @@ export class AppComponent {
 
         this.setLoginDisplay();
       })
-      // this.msalBroadcastService.msalSubject$
-      // .pipe(
-      //   filter((msg: EventMessage) => msg.eventType === EventType.ACQUIRE_TOKEN_SUCCESS),
-      //   takeUntil(this._destroying$)
-      // )
-      // .subscribe((result: EventMessage) => {
-      //   console.log('Result',result);
+      this.msalBroadcastService.msalSubject$
+      .pipe(
+        filter((msg: EventMessage) => msg.eventType === EventType.ACQUIRE_TOKEN_SUCCESS),
+        takeUntil(this._destroying$)
+      )
+      .subscribe((result: EventMessage) => {
+        console.log('Result',result);
         
-      //   //let temp = result['payload']['accessToken'];
-      //   //localStorage.setItem('currentToken', temp);
-      //   // Do something with event payload here
-      // });
+        //let temp = result['payload']['accessToken'];
+        //localStorage.setItem('currentToken', temp);
+        // Do something with event payload here
+      });
   }
   
-    // ngOnDestroy(): void {
-    //   this._destroying$.next(undefined);
-    //   this._destroying$.complete();
-    // }
+    ngOnDestroy(): void {
+      this._destroying$.next(undefined);
+      this._destroying$.complete();
+    }
     
     setLoginDisplay() {
       this.loginDisplay = this.authService.instance.getAllAccounts().length > 0;
